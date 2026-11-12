@@ -16,13 +16,14 @@ import { cn } from "@/lib/utils";
 
 const MAX_ITENS = 4;
 
-export function BottomNav({ marca }: { marca: DadosMarcaShell }) {
+export function BottomNav({ marca, isAdmin }: { marca: DadosMarcaShell; isAdmin: boolean }) {
   const caminho = usePathname();
+  const itens = NAVEGACAO.filter((item) => item.href !== "/usuarios" || isAdmin);
   const [maisAberto, setMaisAberto] = useState(false);
   const dialogo = useRef<HTMLDialogElement>(null);
 
-  const principais = NAVEGACAO.filter((i) => i.celular).slice(0, MAX_ITENS);
-  const temMais = NAVEGACAO.length > principais.length;
+  const principais = itens.filter((i) => i.celular).slice(0, MAX_ITENS);
+  const temMais = itens.length > principais.length;
   const maisAtivo = temMais && !principais.some((i) => itemAtivo(caminho, i.href));
 
   useEffect(() => {
@@ -88,7 +89,7 @@ export function BottomNav({ marca }: { marca: DadosMarcaShell }) {
               </button>
             </div>
             <ul className="space-y-1">
-              {NAVEGACAO.map((item) => {
+              {itens.map((item) => {
                 const ativo = itemAtivo(caminho, item.href);
                 const Icone = item.icone;
                 return (

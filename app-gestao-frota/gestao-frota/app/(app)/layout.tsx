@@ -14,6 +14,7 @@ import { obterConfiguracoes } from "@/lib/configuracoes";
 import { SUBTITULO_PADRAO_MENU } from "@/lib/marca";
 import { obterMarca } from "@/lib/marca-servidor";
 import { createClient } from "@/lib/supabase/server";
+import { ehAdministrador } from "@/lib/auth/administrador";
 
 export default async function LayoutApp({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
@@ -22,6 +23,7 @@ export default async function LayoutApp({ children }: { children: React.ReactNod
   if (!data?.claims) redirect("/login");
 
   const email = typeof data.claims.email === "string" ? data.claims.email : "";
+  const isAdmin = ehAdministrador(email);
   const [config, marca] = await Promise.all([obterConfiguracoes(), obterMarca()]);
   const dadosMarca = {
     nome: marca.nome,
@@ -31,7 +33,7 @@ export default async function LayoutApp({ children }: { children: React.ReactNod
 
   return (
     <>
-      <Sidebar marca={dadosMarca} />
+      <Sidebar marca={dadosMarca} isAdmin={isAdmin} />
 
       <div className="md:pl-64">
         <header className="sticky top-0 z-20 flex h-16 items-center gap-3 border-b border-borda bg-fundo/90 px-4 backdrop-blur sm:px-6 nao-imprimir">
@@ -55,7 +57,7 @@ export default async function LayoutApp({ children }: { children: React.ReactNod
         </main>
       </div>
 
-      <BottomNav marca={dadosMarca} />
+      <BottomNav marca={dadosMarca} isAdmin={isAdmin} />
     </>
   );
 }

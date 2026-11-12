@@ -2,7 +2,7 @@
  * MENU DO APP — sidebar (computador) e barra inferior (celular) são geradas daqui.
  * No celular aparecem no máximo 4 itens com `celular: true`; o restante vai para o botão "Mais".
  */
-import { BarChart3, CalendarClock, Fuel, Home, Palette, Route, Settings, TriangleAlert, Truck, UserRound, Wallet, Wrench, type LucideIcon } from "lucide-react";
+import { BarChart3, CalendarClock, Fuel, Home, Palette, Route, Settings, TriangleAlert, Truck, UserPlus, UserRound, Wallet, Wrench, type LucideIcon } from "lucide-react";
 
 export type ItemNavegacao = {
   titulo: string;
@@ -24,6 +24,7 @@ export const NAVEGACAO: ItemNavegacao[] = [
   { titulo: "Vencimentos", href: "/vencimentos", icone: CalendarClock, celular: true },
   { titulo: "Relatórios", href: "/relatorios", icone: BarChart3 },
   { titulo: "Configurações", href: "/configuracoes", icone: Settings },
+  { titulo: "Usuários", href: "/usuarios", icone: UserPlus },
   { titulo: "Personalização", href: "/personalizacao", icone: Palette },
 ];
 

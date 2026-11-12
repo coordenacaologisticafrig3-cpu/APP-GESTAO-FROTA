@@ -12,8 +12,9 @@ import { cn } from "@/lib/utils";
 /** Nome, subtítulo e logo da marca (lidos no layout de app/(app)/). */
 export type DadosMarcaShell = { nome: string; subtitulo: string; logoUrl: string | null };
 
-export function Sidebar({ marca }: { marca: DadosMarcaShell }) {
+export function Sidebar({ marca, isAdmin }: { marca: DadosMarcaShell; isAdmin: boolean }) {
   const caminho = usePathname();
+  const itens = NAVEGACAO.filter((item) => item.href !== "/usuarios" || isAdmin);
   return (
     <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-borda bg-superficie md:flex nao-imprimir">
       <div className="flex h-16 items-center gap-3 border-b border-borda px-5">
@@ -26,7 +27,7 @@ export function Sidebar({ marca }: { marca: DadosMarcaShell }) {
         </div>
       </div>
       <nav aria-label="Menu principal" className="flex-1 space-y-1 overflow-y-auto p-3">
-        {NAVEGACAO.map((item) => {
+        {itens.map((item) => {
           const ativo = itemAtivo(caminho, item.href);
           const Icone = item.icone;
           return (
